@@ -1,0 +1,21 @@
+{
+    "manifest_version": 3, 
+    "name": "test chrome extension", 
+    "description": "find global entry interviews that meet your selection criteria", 
+    "version": "1.0", 
+    "actions": {
+        "default_popup": "popup/popup.html"
+    }, 
+    "icons":{
+        "16": "images/icon-16.png", 
+        "32": "images/icon-32.png",
+        "128": "images/icon-128.png"
+    }, 
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+    }, 
+    "permissions":[
+        "storage"
+    ]
+}
