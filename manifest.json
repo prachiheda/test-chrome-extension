@@ -3,7 +3,7 @@
     "name": "test chrome extension", 
     "description": "find global entry interviews that meet your selection criteria", 
     "version": "1.0", 
-    "actions": {
+    "action": {
         "default_popup": "popup/popup.html"
     }, 
     "icons":{
