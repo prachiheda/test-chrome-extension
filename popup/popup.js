@@ -5,6 +5,8 @@ const endDateElement = document.getElementById("endDate");
 const startButton = document.getElementById("startButton"); 
 const stopButton = document.getElementById("stopButton"); 
 
+// when we start, we save our preferences that were selected in the extension
+//we then send a chrome runtime message that we have started, and our preferences.
 startButton.onclick = () => {
     const prefs = {
         locationId: locationIdElement.value, 
@@ -21,6 +23,8 @@ stopButton.onclick = () => {
     chrome.runtime.sendMessage({ event: 'onStop' })
 };
 
+// when we open up the extension, our previous preferences must be saved
+//we get our previous preferences from chrome local storage
 chrome.storage.local.get(["locationId", "startDate", "endDate", "locations"], (result) => {
     const { locationId, startDate, endDate, locations } = result; 
 
@@ -38,7 +42,7 @@ chrome.storage.local.get(["locationId", "startDate", "endDate", "locations"], (r
 });
 
 
-
+//this will populate the drop down with an array of locations 
 const setLocations = (locations)=>{
     locations.forEach(location =>{
         let optionElement = document.createElement("option"); 
