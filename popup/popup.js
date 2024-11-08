@@ -9,9 +9,11 @@ startButton.onclick = () => {
     const prefs = {
         locationId: locationIdElement.value, 
         startDate: startDateElement.value, 
-        endDate: endDateElement.value
+        endDate: endDateElement.value,
+        tzData: locationIdElement.options[locationIdElement.selectedIndex].getAttribute('data-tz')
     }
     chrome.runtime.sendMessage({ event: 'onStart', prefs })
+
     
 };
 
@@ -19,8 +21,11 @@ stopButton.onclick = () => {
     chrome.runtime.sendMessage({ event: 'onStop' })
 };
 
-chrome.storage.local.get(["locationId", "startDate", "endDate"], (result) => {
-    const { locationId, startDate, endDate } = result; 
+chrome.storage.local.get(["locationId", "startDate", "endDate", "locations"], (result) => {
+    const { locationId, startDate, endDate, locations } = result; 
+
+    setLocations(locations)
+
     if (locationId) {
         locationIdElement.value = locationId; 
     }
@@ -31,3 +36,15 @@ chrome.storage.local.get(["locationId", "startDate", "endDate"], (result) => {
         endDateElement.value = endDate; 
     }
 });
+
+
+
+const setLocations = (locations)=>{
+    locations.forEach(location =>{
+        let optionElement = document.createElement("option"); 
+        optionElement.value = location.id; 
+        optionElement.innerHTML = location.name; 
+        optionElement.setAttribute('data-tz', location.tzData); 
+        locationIdElement.appendChild(optionElement); 
+    })
+}

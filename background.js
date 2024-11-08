@@ -1,3 +1,12 @@
+import fetchLocations from "./api/fetchLocations.js"
+
+
+chrome.runtime.onInstalled.addListener(details => {
+    fetchLocations()
+
+})
+
+
 chrome.runtime.onMessage.addListener(data => {
     const{event, prefs} = data
     switch(event){
