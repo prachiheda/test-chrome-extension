@@ -25,8 +25,8 @@ stopButton.onclick = () => {
 
 // when we open up the extension, our previous preferences must be saved
 //we get our previous preferences from chrome local storage
-chrome.storage.local.get(["locationId", "startDate", "endDate", "locations"], (result) => {
-    const { locationId, startDate, endDate, locations } = result; 
+chrome.storage.local.get(["locationId", "startDate", "endDate", "locations", "isRunning"], (result) => {
+    const { locationId, startDate, endDate, locations, isRunning } = result; 
 
     setLocations(locations)
 
@@ -39,6 +39,7 @@ chrome.storage.local.get(["locationId", "startDate", "endDate", "locations"], (r
     if (endDate) {
         endDateElement.value = endDate; 
     }
+    console.log("running status", isRunning)
 });
 
 
