@@ -2,7 +2,7 @@ const LOCATION_ENDPOINT = "https://ttp.cbp.dhs.gov/schedulerapi/locations/?tempo
 
 //api call
 //we fetch data from endpoint, filter it down, and put it into our local storage
-export default function fetchLocations() {
+export const fetchLocations = () => {
     fetch(LOCATION_ENDPOINT)
         .then(response => response.json())
         .then(data =>{

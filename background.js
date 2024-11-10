@@ -1,5 +1,7 @@
-import fetchLocations from "./api/fetchLocations.js"
+import {fetchLocations} from "./api/fetchLocations.js"
+import { fetchOpenSlots } from "./api/fetchOpenSlots.js"
 const ALARM_JOB_NAME = "DROP_ALARM"
+let cachedPrefs = {}; 
 
 //when the extension is updated or installed, we call the fetch locations API to populate our locations 
 chrome.runtime.onInstalled.addListener(details => {
@@ -26,6 +28,7 @@ chrome.runtime.onMessage.addListener(data => {
 const handleOnStop = () =>{
     console.log('on stop on'); 
     stopAlarm()
+    cachedPrefs = {}; 
     //we have stopped running
     setRunningStatus(false)
 }
@@ -34,6 +37,7 @@ const handleOnStop = () =>{
 const handleOnStart = (prefs) =>{
     console.log(prefs); 
     chrome.storage.local.set(prefs); 
+    cachedPrefs = prefs; 
     //create an alarm when starting 
     createAlarm()
     //we are running 
@@ -62,5 +66,6 @@ const stopAlarm = () =>{
 
 //listener event: every time an alarm is created, run this code
 chrome.alarms.onAlarm.addListener(()=>{
-    console.log("onAlarm scheduled code running...")
+    console.log("onAlarm scheduled code running..."); 
+    fetchOpenSlots(cachedPrefs); 
 })
